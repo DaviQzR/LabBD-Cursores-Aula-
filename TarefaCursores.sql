@@ -9,44 +9,44 @@ CREATE TABLE curso (
     nome VARCHAR(50),
     duracao INT,
     PRIMARY KEY (codigo)
-);
+)
 
 -- Inserindo dados na tabela curso
 INSERT INTO curso (Codigo, Nome, Duracao)
 VALUES
-(48, 'An·lise e Desenvolvimento de Sistemas', 2880),
-(51, 'LogÌstica', 2880),
-(67, 'PolÌmeros', 2880),
-(73, 'ComÈrcio Exterior', 2600),
-(94, 'Gest„o Empresarial', 2600);
+(48, 'An√°lise e Desenvolvimento de Sistemas', 2880),
+(51, 'Log√≠stica', 2880),
+(67, 'Pol√≠meros', 2880),
+(73, 'Com√©rcio Exterior', 2600),
+(94, 'Gest√£o Empresarial', 2600)
 
 CREATE TABLE disciplinas (
     codigo VARCHAR(10),
     nome VARCHAR(100),
     carga_horaria INT,
     PRIMARY KEY (codigo)
-);
+)
 
 -- Inserir dados na tabela Disciplinas
 INSERT INTO disciplinas (Codigo, Nome, Carga_Horaria)
 VALUES
 ('ALG001', 'Algoritmos', 80),
-('ADM001', 'AdministraÁ„o', 80),
-('LHW010', 'LaboratÛrio de Hardware', 40),
+('ADM001', 'Administra√ß√£o', 80),
+('LHW010', 'Laborat√≥rio de Hardware', 40),
 ('LPO001', 'Pesquisa Operacional', 80),
-('FIS003', 'FÌsica I', 80),
-('FIS007', 'FÌsico QuÌmica', 80),
-('CMX001', 'ComÈrcio Exterior', 80),
+('FIS003', 'F√≠sica I', 80),
+('FIS007', 'F√≠sico Qu√≠mica', 80),
+('CMX001', 'Com√©rcio Exterior', 80),
 ('MKT002', 'Fundamentos de Marketing', 80),
-('INF001', 'Inform·tica', 40),
-('ASI001', 'Sistemas de InformaÁ„o', 80);
+('INF001', 'Inform√°tica', 40),
+('ASI001', 'Sistemas de Informa√ß√£o', 80)
 
 CREATE TABLE disciplina_curso (
     codigo_disciplina VARCHAR(10),
     codigo_curso INT,
     FOREIGN KEY (codigo_disciplina) REFERENCES disciplinas (codigo),
     FOREIGN KEY (codigo_curso) REFERENCES curso (codigo)
-);
+)
 
 -- Inserir dados na tabela Disciplina_Curso
 INSERT INTO disciplina_curso (codigo_disciplina, codigo_curso)
@@ -67,9 +67,9 @@ VALUES
 ('INF001', 51),
 ('INF001', 73),
 ('ASI001', 48),
-('ASI001', 94);
+('ASI001', 94)
 
--- CriaÁ„o da funÁ„o
+-- Cria√ß√£o da fun√ß√£o
 CREATE FUNCTION fn_curso_disciplina (@codigo_curso INT)
 RETURNS @tabela_saida TABLE (
     codigo_disciplina VARCHAR(10),
@@ -91,7 +91,7 @@ BEGIN
         INNER JOIN disciplina_curso dc ON d.codigo = dc.codigo_disciplina
         WHERE dc.codigo_curso = @codigo_curso
 
-    -- Vari·veis para armazenar os dados da disciplina
+    -- Vari√°veis para armazenar os dados da disciplina
     DECLARE @codigo_disciplina VARCHAR(10)
     DECLARE @nome_disciplina VARCHAR(100)
     DECLARE @carga_horaria_disciplina INT
@@ -99,7 +99,7 @@ BEGIN
     OPEN c
     FETCH NEXT FROM c INTO @codigo_disciplina, @nome_disciplina, @carga_horaria_disciplina
 
-    -- LaÁo para o processamento das disciplinas
+    -- La√ßo para o processamento das disciplinas
     WHILE @@FETCH_STATUS = 0
     BEGIN
         INSERT INTO @tabela_saida (codigo_disciplina, nome_disciplina, carga_horaria_disciplina, nome_curso)
